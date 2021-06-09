@@ -4,7 +4,7 @@ from copy import deepcopy
 import time
 
 
-# list of 面子
+# 面子のリスト
 sets = [
     np.array([1, 1, 1, 0, 0, 0, 0, 0, 0]),
     np.array([0, 1, 1, 1, 0, 0, 0, 0, 0]),
@@ -24,7 +24,7 @@ sets = [
     np.array([0, 0, 0, 0, 0, 0, 0, 0, 3]),
 ]
 
-# list of 雀頭
+# 雀頭のリスト
 heads = [
     np.array([2, 0, 0, 0, 0, 0, 0, 0, 0]),
     np.array([0, 2, 0, 0, 0, 0, 0, 0, 0]),
@@ -69,7 +69,7 @@ def complete_hands():
     return ret
 
 
-# calculate シャンテン数 with 01BFS
+# 01BFSを用いてシャンテン数を計算
 def bfs(W):
     dist = {}
     deq = deque()
@@ -103,7 +103,7 @@ def main():
     shanten = bfs(W)
     assert(len(shanten) == 405350)
 
-    # save result
+    # 計算結果を保存
     with open("shanten.txt", mode='w') as f:
         for hash, shanten in shanten.items():
             hand = decode(hash)
