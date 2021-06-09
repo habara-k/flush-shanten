@@ -2,7 +2,7 @@
 
 A python implementation of calculating "shanten number" in Japanese mahjong, only for flush hand
 
-# How To Use
+## How To Use
 
 ```
 git clone --recursive https://github.com/habara-k/flush-shanten.git
@@ -14,3 +14,11 @@ make
 python3 ../shanten.py
 ./verify
 ```
+
+## Licence
+
+[MIT](https://github.com/habara-k/flush-shanten/blob/main/LICENSE)
+
+## Author
+
+[habara-k](https://github.com/habara-k)
