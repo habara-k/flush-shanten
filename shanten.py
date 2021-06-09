@@ -3,37 +3,38 @@ from collections import deque
 from copy import deepcopy
 import time
 
+
 # list of 面子
 sets = [
-    np.array([1,1,1,0,0,0,0,0,0]),
-    np.array([0,1,1,1,0,0,0,0,0]),
-    np.array([0,0,1,1,1,0,0,0,0]),
-    np.array([0,0,0,1,1,1,0,0,0]),
-    np.array([0,0,0,0,1,1,1,0,0]),
-    np.array([0,0,0,0,0,1,1,1,0]),
-    np.array([0,0,0,0,0,0,1,1,1]),
-    np.array([3,0,0,0,0,0,0,0,0]),
-    np.array([0,3,0,0,0,0,0,0,0]),
-    np.array([0,0,3,0,0,0,0,0,0]),
-    np.array([0,0,0,3,0,0,0,0,0]),
-    np.array([0,0,0,0,3,0,0,0,0]),
-    np.array([0,0,0,0,0,3,0,0,0]),
-    np.array([0,0,0,0,0,0,3,0,0]),
-    np.array([0,0,0,0,0,0,0,3,0]),
-    np.array([0,0,0,0,0,0,0,0,3]),
+    np.array([1, 1, 1, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 1, 1, 1, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 1, 1, 1, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 1, 1, 1, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 1, 1, 1, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 1, 1, 1, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 1, 1, 1]),
+    np.array([3, 0, 0, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 3, 0, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 3, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 3, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 3, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 3, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 3, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 0, 3, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 0, 0, 3]),
 ]
 
 # list of 雀頭
 heads = [
-    np.array([2,0,0,0,0,0,0,0,0]),
-    np.array([0,2,0,0,0,0,0,0,0]),
-    np.array([0,0,2,0,0,0,0,0,0]),
-    np.array([0,0,0,2,0,0,0,0,0]),
-    np.array([0,0,0,0,2,0,0,0,0]),
-    np.array([0,0,0,0,0,2,0,0,0]),
-    np.array([0,0,0,0,0,0,2,0,0]),
-    np.array([0,0,0,0,0,0,0,2,0]),
-    np.array([0,0,0,0,0,0,0,0,2]),
+    np.array([2, 0, 0, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 2, 0, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 2, 0, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 2, 0, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 2, 0, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 2, 0, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 2, 0, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 0, 2, 0]),
+    np.array([0, 0, 0, 0, 0, 0, 0, 0, 2]),
 ]
 
 
@@ -44,6 +45,7 @@ def encode(hand):
         ret = (ret * 5) + e
     return ret
 
+
 # int -> hand
 def decode(hash):
     ret = np.zeros(9, dtype=int)
@@ -51,6 +53,7 @@ def decode(hash):
         ret[8-i] = hash % 5
         hash //= 5
     return ret
+
 
 # 4面子1雀頭の形を列挙
 def complete_hands():
@@ -73,7 +76,7 @@ def bfs(W):
     for hash, hand in W.items():
         dist[hash] = 0
         deq.append((hash, hand))
-        
+
     while len(deq) > 0:
         hash, hand = deq.popleft()
         for k in range(9):
@@ -93,7 +96,7 @@ def bfs(W):
                     deq.append((hash_sub, hand_sub))
 
     return dist
-    
+
 
 def main():
     W = complete_hands()
@@ -105,14 +108,12 @@ def main():
         for hash, shanten in shanten.items():
             hand = decode(hash)
             f.write("{} {} {} {} {} {} {} {} {} {}\n".format(
-                hand[0],hand[1],hand[2],hand[3],hand[4],
-                hand[5],hand[6],hand[7],hand[8],shanten))
-            
+                hand[0], hand[1], hand[2], hand[3], hand[4],
+                hand[5], hand[6], hand[7], hand[8], shanten))
+
 
 if __name__ == '__main__':
     start = time.time()
     main()
     elapsed_time = time.time() - start
     print("elapsed_time: {} [sec]".format(elapsed_time))
-
-    
