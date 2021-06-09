@@ -15,7 +15,7 @@ python3 ../shanten.py
 ./verify
 ```
 
-## Explanation
+## Description
 [清一色のシャンテン数を01BFSで計算する](https://habara-k.hatenadiary.jp/entry/2021/06/09/181140)
 
 ## Licence
