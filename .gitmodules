@@ -1,0 +1,3 @@
+[submodule "shanten-number-calculator"]
+	path = shanten-number-calculator
+	url = https://github.com/tomohxx/shanten-number-calculator.git
