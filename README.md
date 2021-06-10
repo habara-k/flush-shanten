@@ -12,6 +12,8 @@ cd build
 cmake ..
 make
 python3 ../shanten.py
+rustc -C opt-level=3 -C debug_assertions=no ../shanten.rs
+./shanten
 ./verify
 ```
 

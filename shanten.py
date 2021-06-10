@@ -100,12 +100,11 @@ def bfs(ws):
 
 def main():
     ws = complete_hands()
-    print("len(ws):", len(ws))
     shanten = bfs(ws)
     assert(len(shanten) == 405350)
 
     # 計算結果を保存
-    with open("shanten.txt", mode='w') as f:
+    with open("shanten-py.txt", mode='w') as f:
         for code, shanten in shanten.items():
             hand = decode(code)
             f.write("{} {} {} {} {} {} {} {} {} {}\n".format(
