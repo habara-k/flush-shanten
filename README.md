@@ -1,6 +1,6 @@
 # Flush Shanten
 
-A python implementation of calculating "shanten number" in Japanese mahjong, only for flush hand
+A python and rust implementation of calculating "shanten number" in Japanese mahjong, only for flush hand
 
 ## How To Use
 
