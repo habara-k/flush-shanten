@@ -3,7 +3,9 @@ use std::fs;
 use std::io::Write;
 use std::time::Instant;
 
+// 4面子1雀頭の形を列挙
 fn complete_hands() -> BTreeSet<Vec<i32>> {
+    // 面子のリスト
     let sets = vec![
         vec![1, 1, 1, 0, 0, 0, 0, 0, 0],
         vec![0, 1, 1, 1, 0, 0, 0, 0, 0],
@@ -22,6 +24,8 @@ fn complete_hands() -> BTreeSet<Vec<i32>> {
         vec![0, 0, 0, 0, 0, 0, 0, 3, 0],
         vec![0, 0, 0, 0, 0, 0, 0, 0, 3],
     ];
+
+    // 雀頭のリスト
     let heads = vec![
         vec![2, 0, 0, 0, 0, 0, 0, 0, 0],
         vec![0, 2, 0, 0, 0, 0, 0, 0, 0],
@@ -56,6 +60,7 @@ fn complete_hands() -> BTreeSet<Vec<i32>> {
     ret
 }
 
+// 01BFSを用いてシャンテン数を計算
 fn bfs(ws: BTreeSet<Vec<i32>>) -> BTreeMap<Vec<i32>, i32> {
     let mut dist: BTreeMap<Vec<i32>, i32> = BTreeMap::new();
     let mut deq: VecDeque<Vec<i32>> = VecDeque::new();
@@ -91,28 +96,19 @@ fn bfs(ws: BTreeSet<Vec<i32>>) -> BTreeMap<Vec<i32>, i32> {
     dist
 }
 
-macro_rules! time {
-    ($x:expr) => {{
-        let start = Instant::now();
-        $x;
-        let end = start.elapsed();
-        end.as_nanos() as f64 / 1_000_000_000 as f64
-    }};
-}
-
 fn main() {
-    let elapsed_time = time!({
-        let ws = complete_hands();
-        let shanten = bfs(ws);
-        assert_eq!(shanten.len(), 405350);
+    let start = Instant::now();
+    let ws = complete_hands();
+    let shanten = bfs(ws);
+    assert_eq!(shanten.len(), 405350);
 
-        // 計算結果を保存
-        let mut f = fs::File::create("shanten-rs.txt").unwrap();
-        for (hand, sh) in shanten {
-            f.write_all(format!("{} {} {} {} {} {} {} {} {} {}\n",
-                hand[0], hand[1], hand[2], hand[3], hand[4],
-                hand[5], hand[6], hand[7], hand[8], sh).as_bytes()).unwrap();
-        }
-    });
+    // 計算結果を保存
+    let mut f = fs::File::create("shanten-rs.txt").unwrap();
+    for (hand, sh) in shanten {
+        f.write_all(format!("{} {} {} {} {} {} {} {} {} {}\n",
+            hand[0], hand[1], hand[2], hand[3], hand[4],
+            hand[5], hand[6], hand[7], hand[8], sh).as_bytes()).unwrap();
+    }
+    let elapsed_time = start.elapsed().as_nanos() as f64 / 1_000_000_000 as f64;
     println!("elapsed_time: {} [sec]", elapsed_time);
 }
