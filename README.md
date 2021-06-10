@@ -17,6 +17,11 @@ rustc -C opt-level=3 -C debug_assertions=no ../shanten.rs
 ./verify
 ```
 
+## Benchmark
+Using 3.2GHz CPU and 8GB RAM,
+- `shanten.py`: 42±1 sec
+- `shanten.rs`: 2.12±0.06 sec
+
 ## Description
 [清一色のシャンテン数を01BFSで計算する](https://habara-k.hatenadiary.jp/entry/2021/06/09/181140)
 
