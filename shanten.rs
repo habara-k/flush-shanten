@@ -107,8 +107,10 @@ fn main() {
     for (hand, sh) in shanten {
         f.write_all(format!("{} {} {} {} {} {} {} {} {} {}\n",
             hand[0], hand[1], hand[2], hand[3], hand[4],
-            hand[5], hand[6], hand[7], hand[8], sh).as_bytes()).unwrap();
+            hand[5], hand[6], hand[7], hand[8], sh
+        ).as_bytes()).unwrap();
     }
-    let elapsed_time = start.elapsed().as_nanos() as f64 / 1_000_000_000 as f64;
+    let elapsed_time = start.elapsed().as_nanos() as f64 
+        / 1_000_000_000 as f64;
     println!("elapsed_time: {} [sec]", elapsed_time);
 }
