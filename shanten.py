@@ -40,19 +40,19 @@ heads = [
 
 # hand -> int (5進数とみなす)
 def encode(hand):
-    ret = 0
-    for e in hand:
-        ret = (ret * 5) + e
-    return ret
+    code = 0
+    for h in hand:
+        code = (code * 5) + h
+    return code
 
 
 # int -> hand
-def decode(hash):
-    ret = np.zeros(9, dtype=int)
+def decode(code):
+    hand = np.zeros(9, dtype=int)
     for i in range(9):
-        ret[8-i] = hash % 5
-        hash //= 5
-    return ret
+        hand[8-i] = code % 5
+        code //= 5
+    return hand
 
 
 # 4面子1雀頭の形を列挙
@@ -70,43 +70,44 @@ def complete_hands():
 
 
 # 01BFSを用いてシャンテン数を計算
-def bfs(W):
+def bfs(ws):
     dist = {}
     deq = deque()
-    for hash, hand in W.items():
-        dist[hash] = 0
-        deq.append((hash, hand))
+    for code, hand in ws.items():
+        dist[code] = 0
+        deq.append((code, hand))
 
     while len(deq) > 0:
-        hash, hand = deq.popleft()
+        code, hand = deq.popleft()
         for k in range(9):
             if hand[k] < 4 and sum(hand) < 14:
                 hand_add = deepcopy(hand)
                 hand_add[k] += 1
-                hash_add = encode(hand_add)
-                if hash_add not in dist:
-                    dist[hash_add] = dist[hash]
-                    deq.appendleft((hash_add, hand_add))
+                code_add = encode(hand_add)
+                if code_add not in dist:
+                    dist[code_add] = dist[code]
+                    deq.appendleft((code_add, hand_add))
             if hand[k] > 0:
                 hand_sub = deepcopy(hand)
                 hand_sub[k] -= 1
-                hash_sub = encode(hand_sub)
-                if hash_sub not in dist:
-                    dist[hash_sub] = dist[hash] + 1
-                    deq.append((hash_sub, hand_sub))
+                code_sub = encode(hand_sub)
+                if code_sub not in dist:
+                    dist[code_sub] = dist[code] + 1
+                    deq.append((code_sub, hand_sub))
 
     return dist
 
 
 def main():
-    W = complete_hands()
-    shanten = bfs(W)
+    ws = complete_hands()
+    print("len(ws):", len(ws))
+    shanten = bfs(ws)
     assert(len(shanten) == 405350)
 
     # 計算結果を保存
     with open("shanten.txt", mode='w') as f:
-        for hash, shanten in shanten.items():
-            hand = decode(hash)
+        for code, shanten in shanten.items():
+            hand = decode(code)
             f.write("{} {} {} {} {} {} {} {} {} {}\n".format(
                 hand[0], hand[1], hand[2], hand[3], hand[4],
                 hand[5], hand[6], hand[7], hand[8], shanten))
